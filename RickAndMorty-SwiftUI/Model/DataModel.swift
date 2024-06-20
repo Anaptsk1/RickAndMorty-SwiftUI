@@ -1,5 +1,5 @@
 //
-//  DataService.swift
+//  DataModel.swift
 //  RickAndMorty-SwiftUI
 //
 //  Created by Ana Ptskialadze on 13.06.24.
@@ -30,7 +30,8 @@ struct Character: Codable, Identifiable {
     var origin: [String: String]
     var location: [String: String]
     var image: String
-    //var episode: [String]
+    let url: String
+    let created: String
 }
 
 struct Location: Codable, Identifiable {
