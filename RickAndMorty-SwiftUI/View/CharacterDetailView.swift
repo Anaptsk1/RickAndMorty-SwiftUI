@@ -19,7 +19,7 @@ struct CharacterDetailView: View {
                 Color.gray
             }
             .frame(width: 300, height: 300)
-            
+            .background((Color.green).ignoresSafeArea())
             Text("Name: \(character.name)")
             Text("Status: \(character.status)")
             Text("Origin: \(character.origin["name"] ?? "Unknown")")

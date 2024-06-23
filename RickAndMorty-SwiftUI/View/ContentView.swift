@@ -24,6 +24,8 @@ struct ContentView: View {
             }
             .navigationTitle("RickAndMortyApp")
         }
+        .font(.headline)
+        .accentColor(.green)
     }
 }
 
