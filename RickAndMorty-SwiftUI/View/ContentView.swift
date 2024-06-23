@@ -21,7 +21,8 @@ struct ContentView: View {
                 } header: {
                     Text("Choose your journey").bold().font(.callout)
                 }
-            }.navigationTitle("RickAndMortyApp")
+            }
+            .navigationTitle("RickAndMortyApp")
         }
     }
 }

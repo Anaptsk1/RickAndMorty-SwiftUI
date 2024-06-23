@@ -16,9 +16,9 @@ struct EpisodesView: View {
             NavigationLink(destination: EpisodeDetailView(episode: episode)) {
                 Text(episode.name)
             }
-        }
-        .onAppear {
-            viewModel.fetchEpisodeData()
+            .onAppear {
+                viewModel.loadMoreContentIfNeeded(currentItem: episode)
+            }
         }
         .navigationTitle("Episodes")
     }
@@ -27,16 +27,46 @@ struct EpisodesView: View {
 class EpisodesViewModel: ObservableObject {
     
     @Published var episodes: [Episode] = []
+    @Published var isLoading = false
+    private var nextPageURL: URL? = URL(string: "https://rickandmortyapi.com/api/episode")
     
-    func fetchEpisodeData() {
+    init() {
+        loadMoreContent()
+    }
+    
+    func loadMoreContent() {
+        guard !isLoading, let nextPageURL = nextPageURL else {
+            return
+        }
         
-        NetworkManager.shared.fetchData(from: .episodes) { (result: Result<EpisodeResults, any Error>) in
+        isLoading = true
+        
+        NetworkManager.shared.fetchData(from: .custom(url: nextPageURL)) { [weak self] (result: Result<EpisodeResults, Error>) in
             switch result {
             case .success(let episodeResults):
-                self.episodes = episodeResults.results
+                DispatchQueue.main.async {
+                    self?.episodes.append(contentsOf: episodeResults.results)
+                    self?.nextPageURL = URL(string: episodeResults.info.next ?? "")
+                    self?.isLoading = false
+                }
             case .failure(let error):
-                print(error)
+                print("Failed to fetch episodes: \(error)")
+                DispatchQueue.main.async {
+                    self?.isLoading = false
+                }
             }
+        }
+    }
+    
+    func loadMoreContentIfNeeded(currentItem episode: Episode?) {
+        guard let episode = episode else {
+            loadMoreContent()
+            return
+        }
+        
+        let thresholdIndex = episodes.index(episodes.endIndex, offsetBy: -5)
+        if episodes.firstIndex(where: { $0.id == episode.id }) == thresholdIndex {
+            loadMoreContent()
         }
     }
 }

@@ -35,21 +35,17 @@ struct Character: Codable, Identifiable {
 }
 
 struct Location: Codable, Identifiable {
-    
     var id: Int
     var name: String
     var type: String
     var dimension: String
-    //var residents: [String]
 }
 
 struct Episode: Codable, Identifiable {
-    
     var id: Int
     var name: String
     var air_date: String
     var episode: String
-    //var characters: [String]
 }
 
 struct Info: Codable {
