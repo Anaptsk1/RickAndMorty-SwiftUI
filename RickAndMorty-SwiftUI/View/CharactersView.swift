@@ -47,24 +47,13 @@ class CharactersViewModel: ObservableObject {
         loadMoreContent()
     }
     
-    func loadMoreContentIfNeeded(currentItem character: Character?) {
-        guard let character = character else {
-            loadMoreContent()
-            return
-        }
-        
-        let thresholdIndex = characters.index(characters.endIndex, offsetBy: -5)
-        if characters.firstIndex(where: { $0.id == character.id }) == thresholdIndex {
-            loadMoreContent()
-        }
-    }
-    
     func loadMoreContent() {
         guard !isLoading, let nextPageURL = nextPageURL else {
             return
         }
         
         isLoading = true
+        
         NetworkManager.shared.fetchData(from: .custom(url: nextPageURL)) { [weak self] (result: Result<CharacterResults, Error>) in
             switch result {
             case .success(let characterResults):
@@ -79,6 +68,18 @@ class CharactersViewModel: ObservableObject {
                     self?.isLoading = false
                 }
             }
+        }
+    }
+    
+    func loadMoreContentIfNeeded(currentItem character: Character?) {
+        guard let character = character else {
+            loadMoreContent()
+            return
+        }
+        
+        let thresholdIndex = characters.index(characters.endIndex, offsetBy: -5)
+        if characters.firstIndex(where: { $0.id == character.id }) == thresholdIndex {
+            loadMoreContent()
         }
     }
 }

@@ -14,8 +14,8 @@ struct LocationDetailView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             Text("Name: \(location.name)")
-            Text("Status: \(location.type)")
-            Text("Origin: \(location.dimension)")
+            Text("Type: \(location.type)")
+            Text("Dimension: \(location.dimension)")
         }
         .padding()
         .navigationTitle(location.name)
