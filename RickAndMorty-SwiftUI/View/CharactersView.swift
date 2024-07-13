@@ -12,8 +12,8 @@ struct CharactersView: View {
     @StateObject var viewModel = CharactersViewModel()
     
     var body: some View {
-        NavigationView {
-            VStack(alignment: .leading, spacing: -8) {
+        NavigationStack {
+            VStack(alignment: .leading, spacing: 0) {
                 List(viewModel.filteredCharacters) { character in
                     VStack(alignment: .leading) {
                         AsyncImage(url: URL(string: character.image)) { image in
