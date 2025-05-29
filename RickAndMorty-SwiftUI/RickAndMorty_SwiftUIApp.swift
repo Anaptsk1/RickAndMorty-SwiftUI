@@ -11,7 +11,7 @@ import SwiftUI
 struct RickAndMorty_SwiftUIApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TabBar_()
         }
     }
 }

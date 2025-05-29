@@ -7,154 +7,193 @@
 
 import SwiftUI
 
-struct CharactersView: View {
+struct HomeView: View {
     
-    @StateObject var viewModel = CharactersViewModel()
+    @StateObject var viewModel = CharacterModel()
+    @State private var heartStates = [Int: Bool]()
+    @State private var showCommentScreen: Bool = false
+    @State private var textFieldValue: String = ""
     
     var body: some View {
         NavigationStack {
             ScrollView(.horizontal) {
-                HStack {
-                    ForEach(viewModel.filteredCharacters) { character in
-                        NavigationLink(destination: CharacterDetailView(character: character)) {
-                            AsyncImage(url: URL(string: character.image)) { image in
-                                image.resizable()
-                            } placeholder: {
-                                Color.gray
-                            }
-                            .frame(width: 60, height: 60)
-                            .clipShape(Circle())
-                            .shadow(radius: 5)
-                        }
-                    }
-                    .padding(.trailing)
-                }
-                .padding()
+                characterIcons
             }
             VStack(alignment: .leading, spacing: 0) {
                 ScrollView {
-                    ForEach(viewModel.filteredCharacters) { character in
-                        VStack(alignment: .leading) {
-                            HStack {
-                                Circle()
-                                    .fill(Color.gray)
-                                    .scaledToFit().frame(width: 40, height: 40)
-                                Text("@userName")
-                            }
-                            .padding(.leading)
-                            AsyncImage(url: URL(string: character.image)) { image in
-                                image.resizable()
-                            } placeholder: {
-                                Color.gray
-                            }
-                            .frame(width: .infinity, height: 300)
-                            .shadow(radius: 5)
-                            
-                            HStack {
-                                Image(systemName: "heart")
-                                Image(systemName: "bubble.right")
-                            }
-                            .font(.title2)
-                            .padding()
-                            
-                        }
-//                        .onAppear {
-//                            viewModel.loadMoreContentIfNeeded(currentItem: character)
-//                        }
-                    }
+                    characterList
                 }
             }
-            //            .navigationBarTitleDisplayMode(.automatic)
             .toolbar {
-                    ToolbarItem(placement: .topBarLeading) {
-                        Menu {
-                            Button(action: {
-                                print("followers button selected")
-                            }) {
-                                HStack(spacing: 8) {
-                                    Image(systemName: "person.2")
-                                    Text("Followers")
-                                }
-                            }
-                            Button(action: {
-                                print("favourites button selected")
-                            }) {
-                                HStack(spacing: 8) {
-                                    Image(systemName: "star")
-                                    Text("Favourites")
-                                }
-                            }
-                        } label: {
-                            HStack {
-                                Text("For You")
-                                    .font(.title).bold()
-                                Image(systemName: "chevron.down")
-                                    .font(.callout)
-                            }
-                            .foregroundStyle(Color.accentColor)
-                        }
-                    }
-                    ToolbarItem(placement: .topBarTrailing) {
-                        NavigationLink(destination: Text("Heart")) {
-                            Image(systemName: "heart")
-                                .foregroundStyle(Color.accentColor)
-                        }
-                    }
+                ToolbarItem(placement: .topBarLeading) {
+                    menu
                 }
-                //            .searchable(text: $viewModel.searchText)
-                //            .onChange(of: viewModel.searchText) { oldValue, newValue in
-                //                viewModel.filteredCharacters = viewModel.characters.filter { character in
-                //                    newValue.isEmpty || character.name.localizedCaseInsensitiveContains(newValue)
-                //                }
-                //            }
+                ToolbarItem(placement: .topBarTrailing) {
+                    navigationLink
+                }
             }
         }
-        
-        class CharactersViewModel: ObservableObject {
-            
-            @Published var characters: [Character] = []
-            @Published var filteredCharacters: [Character] = []
-            @Published var searchText = ""
-            @Published var isLoading = false
-            private var nextPageURL: URL? = URL(string: "https://rickandmortyapi.com/api/character")
-            
-            init() {
-                loadMoreContent()
-            }
-            
-            func loadMoreContent() {
-                guard !isLoading, let nextPageURL = nextPageURL else {
-                    return
+        .onAppear {
+            initializeHeartStates()
+        }
+    }
+    
+    private var menu: some View {
+        Menu {
+            Button(action: {
+                print("followers button selected")
+            }) {
+                HStack(spacing: 8) {
+                    Image(systemName: "person.2")
+                    Text("Followers")
                 }
-                
-                isLoading = true
-                
-                NetworkManager.shared.fetchData(from: .custom(url: nextPageURL)) { [weak self] (result: Result<CharacterResults, Error>) in
-                    DispatchQueue.main.async {
-                        self?.isLoading = false
-                        switch result {
-                        case .success(let characterResults):
-                            self?.characters.append(contentsOf: characterResults.results)
-                            self?.filteredCharacters = self?.characters.filter { self?.searchText.isEmpty ?? true || $0.name.localizedCaseInsensitiveContains(self?.searchText ?? "") } ?? []
-                            self?.nextPageURL = URL(string: characterResults.info.next ?? "")
-                        case .failure(let error):
-                            print("Failed to fetch characters: \(error)")
-                        }
+            }
+            Button(action: {
+                print("favourites button selected")
+            }) {
+                HStack(spacing: 8) {
+                    Image(systemName: "star")
+                    Text("Favourites")
+                }
+            }
+        } label: {
+            HStack {
+                Text("For You")
+                    .font(.title).bold()
+                Image(systemName: "chevron.down")
+                    .font(.callout)
+            }
+            .foregroundStyle(Color.accentColor)
+        }
+    }
+    
+    private var navigationLink: some View {
+        NavigationLink(destination: Text("Favourites")) {
+            Image(systemName: "heart")
+                .foregroundStyle(Color.accentColor)
+        }
+    }
+    
+    private var characterIcons: some View {
+        HStack {
+            ForEach(viewModel.filteredCharacters) { character in
+                NavigationLink(destination: CharacterDetailView(character: character)) {
+                    AsyncImage(url: URL(string: character.image)) { image in
+                        image.resizable()
+                    } placeholder: {
+                        Color.gray
                     }
+                    .frame(width: 60, height: 60)
+                    .clipShape(Circle())
+                    .shadow(radius: 5)
                 }
             }
-            
-            func loadMoreContentIfNeeded(currentItem character: Character?) {
-                guard let character = character else {
-                    loadMoreContent()
-                    return
-                }
-                
-                let thresholdIndex = characters.index(characters.endIndex, offsetBy: -5)
-                if characters.firstIndex(where: { $0.id == character.id }) == thresholdIndex {
-                    loadMoreContent()
-                }
+            .padding(.trailing)
+        }
+        .padding()
+    }
+    
+    private var characterList: some View {
+        ForEach(viewModel.filteredCharacters) { character in
+            VStack(alignment: .leading) {
+                userHeader
+                characterImage(character)
+                actionButtons(character)
             }
         }
     }
+    
+    private var userHeader: some View {
+        HStack {
+            Circle()
+                .fill(Color.gray)
+                .scaledToFit()
+                .frame(width: 40, height: 40)
+            Text("@userName")
+        }
+        .padding(.leading)
+    }
+    
+    private func characterImage(_ character: Character) -> some View {
+        AsyncImage(url: URL(string: character.image)) { image in
+            image.resizable()
+        } placeholder: {
+            Color.gray
+        }
+        .frame(width: .infinity, height: 300)
+        .shadow(radius: 5)
+    }
+    
+    private func actionButtons(_ character: Character) -> some View {
+        HStack {
+            Button {
+                heartStates[character.id, default: false].toggle()
+            } label: {
+                Image(systemName: heartStates[character.id, default: false] ? "heart.fill" : "heart")
+                    .foregroundStyle(heartStates[character.id, default: false] ? Color.red : Color.black)
+                    .font(.title2)
+            }
+            Button {
+                showCommentScreen.toggle()
+            } label: {
+                Image(systemName: "bubble.right")
+            }
+            .sheet(isPresented: $showCommentScreen) {
+                commentScreen(textFieldValue: $textFieldValue)
+            }
+            if showCommentScreen {
+                commentScreen(textFieldValue: $textFieldValue)
+                    .padding(.top, 20)
+                    .transition(.move(edge: .bottom))
+                    .presentationDetents([.fraction(2/3)])
+            }
+        }
+        .font(.title2)
+        .padding()
+    }
+    
+    private func initializeHeartStates() {
+        for character in viewModel.filteredCharacters {
+            heartStates[character.id] = false
+        }
+    }
+}
+
+struct commentScreen: View {
+    
+    @Binding var textFieldValue: String
+    
+    var body: some View {
+        RoundedRectangle(cornerSize: .init(width: 20, height: 20))
+            .frame(width: 50, height: 3)
+            .foregroundColor(.gray)
+            .padding(.top, 10)
+        Text("Comments")
+            .bold()
+            .padding(.all, 5)
+        RoundedRectangle(cornerSize: .init(width: 20, height: 20))
+            .frame(width: .infinity, height: 0.3)
+            .foregroundColor(.gray)
+            .padding(.top, 5)
+        Spacer()
+        HStack{
+            Circle()
+                .frame(width: 50, height: 50)
+                .foregroundStyle(Color.gray)
+                .padding(.leading)
+            TextField("Add a comment", text: $textFieldValue)
+                .frame(width: .infinity, height: 30)
+                .padding(.all, 15)
+                .background(Color.white)
+                .clipShape(RoundedRectangle(cornerRadius: 30))
+                .shadow(radius: 5)
+                .padding(.all, 10)
+        }
+        
+    }
+    
+    
+}
+
+
 
