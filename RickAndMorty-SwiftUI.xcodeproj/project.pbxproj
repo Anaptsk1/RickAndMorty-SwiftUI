@@ -101,14 +101,14 @@
 		896A82A52C1B58A800C627D9 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				896C12AE2DA314B500B42087 /* TabBar .swift */,
 				89BE353A2E1924A2009BF1D7 /* SignUpView.swift */,
+				89BE351F2E12F845009BF1D7 /* ProfileView.swift */,
+				896C12AE2DA314B500B42087 /* TabBar .swift */,
 				896A82A62C1B58C600C627D9 /* HomeView.swift */,
 				896C12DE2DC5786500B42087 /* SearchPageView.swift */,
-				896A82A82C1B58E000C627D9 /* CharacterDetailView.swift */,
 				89BE35072E12F336009BF1D7 /* AddPhotosView.swift */,
 				89BE35212E147133009BF1D7 /* ReelsView.swift */,
-				89BE351F2E12F845009BF1D7 /* ProfileView.swift */,
+				896A82A82C1B58E000C627D9 /* CharacterDetailView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -141,7 +141,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1540;
-				LastUpgradeCheck = 1540;
+				LastUpgradeCheck = 1640;
 				TargetAttributes = {
 					896A828E2C1B580E00C627D9 = {
 						CreatedOnToolsVersion = 15.4;
@@ -236,6 +236,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 5P8C5X6D3Y;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -299,6 +300,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 5P8C5X6D3Y;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -328,7 +330,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"RickAndMorty-SwiftUI/Preview Content\"";
-				DEVELOPMENT_TEAM = 5P8C5X6D3Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -357,7 +358,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"RickAndMorty-SwiftUI/Preview Content\"";
-				DEVELOPMENT_TEAM = 5P8C5X6D3Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

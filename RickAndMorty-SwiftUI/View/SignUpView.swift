@@ -14,22 +14,24 @@ struct SignUpView: View {
     var body: some View {
         
         if currentUserSignedIn {
-            ProfileView()
+            TabBar_()
         } else {
-                OnboardingView()
-            }
+            OnboardingView()
+                .animation(.easeInOut, value: currentUserSignedIn)
         }
+        
     }
-
+    
+}
 
 struct OnboardingView: View {
-   
+    
     /*OnBoarding States:
      State 1 = Signup Screen
      State 2 = UserName Screen
      State 3 = Age Screen
      State 4 = Email Screen
-    */
+     */
     @State var stateCount: Int = 0
     
     //User Data Variables
@@ -44,13 +46,13 @@ struct OnboardingView: View {
     @AppStorage("signed_in") var currentUserSignedIn: Bool = false
     
     var body: some View {
-
+        
         ZStack {
             RadialGradient(colors: [Color.blue, Color.red], center: .topLeading, startRadius: 5, endRadius: 1000)
                 .ignoresSafeArea()
             
             ZStack {
-               
+                
                 switch stateCount {
                 case 0:
                     signUpScreen
@@ -68,9 +70,9 @@ struct OnboardingView: View {
                     RoundedRectangle(cornerRadius: 10)
                         .foregroundStyle(.green)
                 }
-               Spacer()
+                Spacer()
             }
-        
+            
             VStack {
                 Spacer()
                 button
@@ -99,10 +101,16 @@ extension OnboardingView {
     private var signUpScreen: some View {
         VStack {
             Spacer()
-            Image("")
+            Spacer()
+            Image(systemName: "person")
                 .resizable()
-                .frame(width: 200, height: 200)
-                .padding()
+                .frame(width: 100, height: 100)
+                .foregroundColor(.white)
+            Text("Sign up to get started and interact with the app!")
+                .font(.title2)
+                .multilineTextAlignment(.center)
+                .foregroundStyle(.white)
+                .padding(50)
             Spacer()
             Spacer()
         }
@@ -114,8 +122,10 @@ extension OnboardingView {
             Text("Enter your username")
                 .font(.headline)
                 .bold()
+                .foregroundStyle(.white)
             Spacer()
-            TextField("Username", text: .constant(""))
+            TextField("Username", text: $userName)
+                .foregroundStyle(.white)
                 .padding(50)
             Spacer()
             Spacer()
@@ -128,9 +138,15 @@ extension OnboardingView {
             Text("Enter your age")
                 .font(.headline)
                 .bold()
+                .foregroundStyle(.white)
             Spacer()
-            TextField("Age", text: .constant(""))
-                .padding(50)
+            Picker("age", selection: $userAge) {
+                ForEach(18..<100) { age in
+                    Text("\(age)").tag(age)
+                }
+                .foregroundStyle(.white)
+            }
+            .pickerStyle(.inline)
             Spacer()
             Spacer()
         }
@@ -142,8 +158,10 @@ extension OnboardingView {
             Text("Enter your email")
                 .font(.headline)
                 .bold()
+                .foregroundStyle(.white)
             Spacer()
-            TextField("Email", text: .constant(""))
+            TextField("Email", text: $userEmail)
+                .foregroundStyle(.white)
                 .padding(50)
             Spacer()
             Spacer()
@@ -153,14 +171,18 @@ extension OnboardingView {
 
 //MARK: Functions
 extension OnboardingView {
-   
     func handleButtonTap() {
         if stateCount == 3 {
+            // Save user data to AppStorage
             currentUserName = userName
             currentUserAge = userAge
             currentUserEmail = userEmail
             currentUserSignedIn = true
             
+            //             Navigate to ProfileView
+            withAnimation(.spring) {
+                stateCount = 0 // Reset stateCount for potential future signups
+            }
         } else {
             withAnimation(.spring) {
                 stateCount += 1
@@ -168,6 +190,7 @@ extension OnboardingView {
         }
     }
 }
+
 
 #Preview {
     OnboardingView()

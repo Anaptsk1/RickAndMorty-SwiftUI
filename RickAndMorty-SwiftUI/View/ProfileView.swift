@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct ProfileView: View {
-    let username: String = "User Name"
-    let bio: String = "Photographer | Traveler | Dreamer"
+    @AppStorage("userName") var username: String = ""
+    @AppStorage("userAge") var age: Int = 0
+    @AppStorage("userEmail") var email: String = ""
+
     let posts: Int = 120
     let followers: Int = 340
     let following: Int = 180
@@ -24,11 +24,16 @@ struct ProfileView: View {
                     .resizable()
                     .frame(width: 80, height: 80)
                     .clipShape(Circle())
-
                 VStack(alignment: .leading, spacing: 10) {
                     Text(username)
                         .font(.title2)
                         .bold()
+                    Text("Age: \(age)")
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                    Text("Email: \(email)")
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
                     HStack(spacing: 30) {
                         VStack {
                             Text("\(posts)")
@@ -36,14 +41,12 @@ struct ProfileView: View {
                             Text("Posts")
                                 .font(.subheadline)
                         }
-
                         VStack {
                             Text("\(followers)")
                                 .font(.headline)
                             Text("Followers")
                                 .font(.subheadline)
                         }
-
                         VStack {
                             Text("\(following)")
                                 .font(.headline)
@@ -53,10 +56,9 @@ struct ProfileView: View {
                     }
                 }
             }
-
             //Bio
             VStack(alignment: .leading, spacing: 5) {
-                Text(bio)
+                Text("Photographer | Traveler | Dreamer")
                     .font(.body)
                     .foregroundColor(.black)
             }
@@ -76,9 +78,9 @@ struct ProfileView: View {
                         .cornerRadius(8)
                 }
                 .padding(.leading)
-                
+
                 Button(action: {
-                    // Action for editing profile
+                    // Action for sharing profile
                 }) {
                     Text("Share Profile")
                         .frame(maxWidth: .infinity)
@@ -88,8 +90,8 @@ struct ProfileView: View {
                         .cornerRadius(8)
                 }
                 .padding(.trailing)
-                
             }
+
             // Grid of Posts
             ScrollView {
                 LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 2), spacing: 10) {
