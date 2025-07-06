@@ -14,13 +14,12 @@
 		896A82A32C1B588200C627D9 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896A82A22C1B588200C627D9 /* DataModel.swift */; };
 		896A82A72C1B58C600C627D9 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896A82A62C1B58C600C627D9 /* HomeView.swift */; };
 		896A82A92C1B58E000C627D9 /* CharacterDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896A82A82C1B58E000C627D9 /* CharacterDetailView.swift */; };
-		896A82AB2C1B590000C627D9 /* LocationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896A82AA2C1B590000C627D9 /* LocationsView.swift */; };
-		896A82AD2C1B591C00C627D9 /* LocationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896A82AC2C1B591C00C627D9 /* LocationDetailView.swift */; };
-		896A82AF2C1B593700C627D9 /* EpisodesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896A82AE2C1B593700C627D9 /* EpisodesView.swift */; };
-		896A82B12C1B595600C627D9 /* EpisodeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896A82B02C1B595600C627D9 /* EpisodeDetailView.swift */; };
 		896C12AF2DA314B500B42087 /* TabBar .swift in Sources */ = {isa = PBXBuildFile; fileRef = 896C12AE2DA314B500B42087 /* TabBar .swift */; };
 		896C12DF2DC5786500B42087 /* SearchPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896C12DE2DC5786500B42087 /* SearchPageView.swift */; };
 		896C12E12DC6B60C00B42087 /* CharacterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896C12E02DC6B60C00B42087 /* CharacterModel.swift */; };
+		89BE35082E12F336009BF1D7 /* AddPhotosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE35072E12F336009BF1D7 /* AddPhotosView.swift */; };
+		89BE35202E12F845009BF1D7 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE351F2E12F845009BF1D7 /* ProfileView.swift */; };
+		89BE35222E147133009BF1D7 /* ReelsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE35212E147133009BF1D7 /* ReelsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,13 +31,12 @@
 		896A82A22C1B588200C627D9 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		896A82A62C1B58C600C627D9 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		896A82A82C1B58E000C627D9 /* CharacterDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailView.swift; sourceTree = "<group>"; };
-		896A82AA2C1B590000C627D9 /* LocationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsView.swift; sourceTree = "<group>"; };
-		896A82AC2C1B591C00C627D9 /* LocationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDetailView.swift; sourceTree = "<group>"; };
-		896A82AE2C1B593700C627D9 /* EpisodesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodesView.swift; sourceTree = "<group>"; };
-		896A82B02C1B595600C627D9 /* EpisodeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeDetailView.swift; sourceTree = "<group>"; };
 		896C12AE2DA314B500B42087 /* TabBar .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TabBar .swift"; sourceTree = "<group>"; };
 		896C12DE2DC5786500B42087 /* SearchPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPageView.swift; sourceTree = "<group>"; };
 		896C12E02DC6B60C00B42087 /* CharacterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterModel.swift; sourceTree = "<group>"; };
+		89BE35072E12F336009BF1D7 /* AddPhotosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotosView.swift; sourceTree = "<group>"; };
+		89BE351F2E12F845009BF1D7 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		89BE35212E147133009BF1D7 /* ReelsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReelsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,10 +103,9 @@
 				896A82A62C1B58C600C627D9 /* HomeView.swift */,
 				896C12DE2DC5786500B42087 /* SearchPageView.swift */,
 				896A82A82C1B58E000C627D9 /* CharacterDetailView.swift */,
-				896A82AA2C1B590000C627D9 /* LocationsView.swift */,
-				896A82AC2C1B591C00C627D9 /* LocationDetailView.swift */,
-				896A82AE2C1B593700C627D9 /* EpisodesView.swift */,
-				896A82B02C1B595600C627D9 /* EpisodeDetailView.swift */,
+				89BE35072E12F336009BF1D7 /* AddPhotosView.swift */,
+				89BE35212E147133009BF1D7 /* ReelsView.swift */,
+				89BE351F2E12F845009BF1D7 /* ProfileView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -183,18 +180,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				896A82AF2C1B593700C627D9 /* EpisodesView.swift in Sources */,
+				89BE35222E147133009BF1D7 /* ReelsView.swift in Sources */,
 				896C12DF2DC5786500B42087 /* SearchPageView.swift in Sources */,
 				896A82A12C1B586000C627D9 /* NetworkManager.swift in Sources */,
 				896A82A72C1B58C600C627D9 /* HomeView.swift in Sources */,
-				896A82B12C1B595600C627D9 /* EpisodeDetailView.swift in Sources */,
-				896A82AD2C1B591C00C627D9 /* LocationDetailView.swift in Sources */,
 				896C12E12DC6B60C00B42087 /* CharacterModel.swift in Sources */,
 				896A82A92C1B58E000C627D9 /* CharacterDetailView.swift in Sources */,
 				896A82932C1B580E00C627D9 /* RickAndMorty_SwiftUIApp.swift in Sources */,
 				896C12AF2DA314B500B42087 /* TabBar .swift in Sources */,
 				896A82A32C1B588200C627D9 /* DataModel.swift in Sources */,
-				896A82AB2C1B590000C627D9 /* LocationsView.swift in Sources */,
+				89BE35202E12F845009BF1D7 /* ProfileView.swift in Sources */,
+				89BE35082E12F336009BF1D7 /* AddPhotosView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

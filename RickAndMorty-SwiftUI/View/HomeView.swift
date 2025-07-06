@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct HomeView: View {
-    
     @StateObject var viewModel = CharacterModel()
     @State private var heartStates = [Int: Bool]()
     @State private var showCommentScreen: Bool = false
     @State private var textFieldValue: String = ""
-    
+    @State private var comments: [String] = []
+
     var body: some View {
         NavigationStack {
             ScrollView(.horizontal) {
@@ -37,7 +37,7 @@ struct HomeView: View {
             initializeHeartStates()
         }
     }
-    
+
     private var menu: some View {
         Menu {
             Button(action: {
@@ -66,14 +66,14 @@ struct HomeView: View {
             .foregroundStyle(Color.accentColor)
         }
     }
-    
+
     private var navigationLink: some View {
         NavigationLink(destination: Text("Favourites")) {
             Image(systemName: "heart")
                 .foregroundStyle(Color.accentColor)
         }
     }
-    
+
     private var characterIcons: some View {
         HStack {
             ForEach(viewModel.filteredCharacters) { character in
@@ -92,7 +92,7 @@ struct HomeView: View {
         }
         .padding()
     }
-    
+
     private var characterList: some View {
         ForEach(viewModel.filteredCharacters) { character in
             VStack(alignment: .leading) {
@@ -102,7 +102,7 @@ struct HomeView: View {
             }
         }
     }
-    
+
     private var userHeader: some View {
         HStack {
             Circle()
@@ -113,7 +113,7 @@ struct HomeView: View {
         }
         .padding(.leading)
     }
-    
+
     private func characterImage(_ character: Character) -> some View {
         AsyncImage(url: URL(string: character.image)) { image in
             image.resizable()
@@ -123,7 +123,7 @@ struct HomeView: View {
         .frame(width: .infinity, height: 300)
         .shadow(radius: 5)
     }
-    
+
     private func actionButtons(_ character: Character) -> some View {
         HStack {
             Button {
@@ -139,19 +139,15 @@ struct HomeView: View {
                 Image(systemName: "bubble.right")
             }
             .sheet(isPresented: $showCommentScreen) {
-                commentScreen(textFieldValue: $textFieldValue)
-            }
-            if showCommentScreen {
-                commentScreen(textFieldValue: $textFieldValue)
-                    .padding(.top, 20)
-                    .transition(.move(edge: .bottom))
-                    .presentationDetents([.fraction(2/3)])
+                commentScreen(textFieldValue: $textFieldValue, comments: $comments)
             }
         }
         .font(.title2)
         .padding()
     }
+
     
+
     private func initializeHeartStates() {
         for character in viewModel.filteredCharacters {
             heartStates[character.id] = false
@@ -160,40 +156,59 @@ struct HomeView: View {
 }
 
 struct commentScreen: View {
-    
     @Binding var textFieldValue: String
-    
+    @Binding var comments: [String]
+
     var body: some View {
-        RoundedRectangle(cornerSize: .init(width: 20, height: 20))
-            .frame(width: 50, height: 3)
-            .foregroundColor(.gray)
-            .padding(.top, 10)
-        Text("Comments")
-            .bold()
-            .padding(.all, 5)
-        RoundedRectangle(cornerSize: .init(width: 20, height: 20))
-            .frame(width: .infinity, height: 0.3)
-            .foregroundColor(.gray)
-            .padding(.top, 5)
-        Spacer()
-        HStack{
-            Circle()
-                .frame(width: 50, height: 50)
-                .foregroundStyle(Color.gray)
-                .padding(.leading)
-            TextField("Add a comment", text: $textFieldValue)
-                .frame(width: .infinity, height: 30)
-                .padding(.all, 15)
-                .background(Color.white)
-                .clipShape(RoundedRectangle(cornerRadius: 30))
-                .shadow(radius: 5)
-                .padding(.all, 10)
+        VStack {
+            RoundedRectangle(cornerSize: .init(width: 20, height: 20))
+                .frame(width: 50, height: 3)
+                .foregroundColor(.gray)
+                .padding(.top, 10)
+            Text("Comments")
+                .bold()
+                .padding(.all, 5)
+            RoundedRectangle(cornerSize: .init(width: 20, height: 20))
+                .frame(width: .infinity, height: 0.3)
+                .foregroundColor(.gray)
+                .padding(.top, 5)
+            commentsSection
+            Spacer()
+            HStack {
+                Circle()
+                    .frame(width: 50, height: 50)
+                    .foregroundStyle(Color.gray)
+                    .padding(.leading)
+                TextField("Add a comment", text: $textFieldValue)
+                    .frame(width: .infinity, height: 30)
+                    .padding(.all, 15)
+                    .background(Color.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 30))
+                    .shadow(radius: 5)
+                    .padding(.all, 10)
+                Button(action: {
+                    if !textFieldValue.isEmpty {
+                        comments.append(textFieldValue)
+                        textFieldValue = ""
+                    }
+                }) {
+                    Image(systemName: "paperplane.fill")
+                        .foregroundStyle(Color.blue)
+                        .font(.title2)
+                }
+                .padding(.trailing)
+            }
         }
-        
     }
-    
-    
+    private var commentsSection: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            ForEach(comments, id: \ .self) { comment in
+                Text(comment)
+                    .padding()
+                    .background(Color.gray.opacity(0.2))
+                    .cornerRadius(8)
+            }
+        }
+        .padding(.horizontal)
+    }
 }
-
-
-

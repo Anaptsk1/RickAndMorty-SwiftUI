@@ -18,15 +18,15 @@ struct TabBar_: View {
                 .tabItem {
                     Image(systemName: "magnifyingglass")
                 }
-            Text("Add photos")
+            AddPhotosView()
                 .tabItem {
                     Image(systemName: "plus.square")
                 }
-            Text("Reels")
+            ReelsView()
                 .tabItem {
                     Image(systemName: "film")
                 }
-            Text("Profile")
+            ProfileView()
                 .tabItem {
                     Image(systemName: "person")
                 }
