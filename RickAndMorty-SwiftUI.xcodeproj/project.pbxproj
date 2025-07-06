@@ -20,6 +20,7 @@
 		89BE35082E12F336009BF1D7 /* AddPhotosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE35072E12F336009BF1D7 /* AddPhotosView.swift */; };
 		89BE35202E12F845009BF1D7 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE351F2E12F845009BF1D7 /* ProfileView.swift */; };
 		89BE35222E147133009BF1D7 /* ReelsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE35212E147133009BF1D7 /* ReelsView.swift */; };
+		89BE353B2E1924A2009BF1D7 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE353A2E1924A2009BF1D7 /* SignUpView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		89BE35072E12F336009BF1D7 /* AddPhotosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotosView.swift; sourceTree = "<group>"; };
 		89BE351F2E12F845009BF1D7 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		89BE35212E147133009BF1D7 /* ReelsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReelsView.swift; sourceTree = "<group>"; };
+		89BE353A2E1924A2009BF1D7 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				896C12AE2DA314B500B42087 /* TabBar .swift */,
+				89BE353A2E1924A2009BF1D7 /* SignUpView.swift */,
 				896A82A62C1B58C600C627D9 /* HomeView.swift */,
 				896C12DE2DC5786500B42087 /* SearchPageView.swift */,
 				896A82A82C1B58E000C627D9 /* CharacterDetailView.swift */,
@@ -184,6 +187,7 @@
 				896C12DF2DC5786500B42087 /* SearchPageView.swift in Sources */,
 				896A82A12C1B586000C627D9 /* NetworkManager.swift in Sources */,
 				896A82A72C1B58C600C627D9 /* HomeView.swift in Sources */,
+				89BE353B2E1924A2009BF1D7 /* SignUpView.swift in Sources */,
 				896C12E12DC6B60C00B42087 /* CharacterModel.swift in Sources */,
 				896A82A92C1B58E000C627D9 /* CharacterDetailView.swift in Sources */,
 				896A82932C1B580E00C627D9 /* RickAndMorty_SwiftUIApp.swift in Sources */,
