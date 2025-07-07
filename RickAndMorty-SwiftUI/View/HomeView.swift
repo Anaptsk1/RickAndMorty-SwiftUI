@@ -13,7 +13,10 @@ struct HomeView: View {
     @State private var showCommentScreen: Bool = false
     @State private var textFieldValue: String = ""
     @State private var comments: [String] = []
-
+    
+    //For AppStorage
+    @AppStorage("userName") var userName: String = "Guest"
+    
     var body: some View {
         NavigationStack {
             ScrollView(.horizontal) {
@@ -37,7 +40,8 @@ struct HomeView: View {
             initializeHeartStates()
         }
     }
-
+    
+    //MARK: DropMenu items
     private var menu: some View {
         Menu {
             Button(action: {
@@ -66,14 +70,15 @@ struct HomeView: View {
             .foregroundStyle(Color.accentColor)
         }
     }
-
+    
     private var navigationLink: some View {
         NavigationLink(destination: Text("Favourites")) {
             Image(systemName: "heart")
                 .foregroundStyle(Color.accentColor)
         }
     }
-
+    
+    //MARK: Stories
     private var characterIcons: some View {
         HStack {
             ForEach(viewModel.filteredCharacters) { character in
@@ -92,7 +97,8 @@ struct HomeView: View {
         }
         .padding()
     }
-
+    
+    //MARK: Posts
     private var characterList: some View {
         ForEach(viewModel.filteredCharacters) { character in
             VStack(alignment: .leading) {
@@ -102,18 +108,19 @@ struct HomeView: View {
             }
         }
     }
-
+    
+    //Post Items
     private var userHeader: some View {
         HStack {
             Circle()
                 .fill(Color.gray)
                 .scaledToFit()
                 .frame(width: 40, height: 40)
-            Text("@userName")
+            Text("@\(userName)") // Dynamically display the username
         }
         .padding(.leading)
     }
-
+    
     private func characterImage(_ character: Character) -> some View {
         AsyncImage(url: URL(string: character.image)) { image in
             image.resizable()
@@ -123,7 +130,8 @@ struct HomeView: View {
         .frame(width: .infinity, height: 300)
         .shadow(radius: 5)
     }
-
+    
+    //MARK: Functions
     private func actionButtons(_ character: Character) -> some View {
         HStack {
             Button {
@@ -139,15 +147,13 @@ struct HomeView: View {
                 Image(systemName: "bubble.right")
             }
             .sheet(isPresented: $showCommentScreen) {
-                commentScreen(textFieldValue: $textFieldValue, comments: $comments)
+                commentScreen(textFieldValue: $textFieldValue, comments: $comments, userName: userName)
             }
         }
         .font(.title2)
         .padding()
     }
-
     
-
     private func initializeHeartStates() {
         for character in viewModel.filteredCharacters {
             heartStates[character.id] = false
@@ -155,10 +161,12 @@ struct HomeView: View {
     }
 }
 
+//MARK: For Comments
 struct commentScreen: View {
     @Binding var textFieldValue: String
     @Binding var comments: [String]
-
+    let userName: String
+    
     var body: some View {
         VStack {
             RoundedRectangle(cornerSize: .init(width: 20, height: 20))
@@ -188,7 +196,7 @@ struct commentScreen: View {
                     .padding(.all, 10)
                 Button(action: {
                     if !textFieldValue.isEmpty {
-                        comments.append(textFieldValue)
+                        comments.append("\(userName): \(textFieldValue)") // Append with username
                         textFieldValue = ""
                     }
                 }) {
@@ -200,6 +208,7 @@ struct commentScreen: View {
             }
         }
     }
+    
     private var commentsSection: some View {
         VStack(alignment: .leading, spacing: 10) {
             ForEach(comments, id: \ .self) { comment in
@@ -211,4 +220,8 @@ struct commentScreen: View {
         }
         .padding(.horizontal)
     }
+}
+
+#Preview {
+    HomeView()
 }

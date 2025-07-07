@@ -12,15 +12,15 @@ struct CharacterResults: Codable {
     var results: [Character]
 }
 
-struct LocationResults: Codable {
-    let info: Info
-    var results: [Location]
-}
-
-struct EpisodeResults: Codable {
-    let info: Info
-    var results: [Episode]
-}
+//struct LocationResults: Codable {
+//    let info: Info
+//    var results: [Location]
+//}
+//
+//struct EpisodeResults: Codable {
+//    let info: Info
+//    var results: [Episode]
+//}
 
 struct Character: Codable, Identifiable {
     var id: Int
@@ -34,19 +34,19 @@ struct Character: Codable, Identifiable {
     let created: String
 }
 
-struct Location: Codable, Identifiable {
-    var id: Int
-    var name: String
-    var type: String
-    var dimension: String
-}
-
-struct Episode: Codable, Identifiable {
-    var id: Int
-    var name: String
-    var air_date: String
-    var episode: String
-}
+//struct Location: Codable, Identifiable {
+//    var id: Int
+//    var name: String
+//    var type: String
+//    var dimension: String
+//}
+//
+//struct Episode: Codable, Identifiable {
+//    var id: Int
+//    var name: String
+//    var air_date: String
+//    var episode: String
+//}
 
 struct Info: Codable {
     let count: Int

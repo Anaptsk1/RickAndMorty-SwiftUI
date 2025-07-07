@@ -14,6 +14,9 @@ struct ReelsView: View {
     @State private var textFieldValue: String = ""
     @State private var comments: [String] = []
 
+    //For Appstorage
+    @AppStorage("userName") var username: String = "Guest"
+
     let reels: [Reel] = [
         Reel(videoURL: "https://www.example.com/video1.mp4", caption: "Amazing view!", username: "@user1"),
         Reel(videoURL: "https://www.example.com/video2.mp4", caption: "Check this out!", username: "@user2"),
@@ -22,23 +25,28 @@ struct ReelsView: View {
 
     var body: some View {
         TabView(selection: $currentIndex) {
-            ForEach(reels.indices, id: \ .self) { index in
-                ReelPlayer(reel: reels[index], isFavorited: favoritedIndices.contains(index), onFavoriteToggle: {
-                    if favoritedIndices.contains(index) {
-                        favoritedIndices.remove(index)
-                    } else {
-                        favoritedIndices.insert(index)
+            ForEach(reels.indices, id: \.self) { index in
+                ReelPlayer(
+                    reel: reels[index],
+                    isFavorited: favoritedIndices.contains(index),
+                    onFavoriteToggle: {
+                        if favoritedIndices.contains(index) {
+                            favoritedIndices.remove(index)
+                        } else {
+                            favoritedIndices.insert(index)
+                        }
+                    },
+                    onCommentPressed: {
+                        showCommentScreen.toggle()
                     }
-                }, onCommentPressed: {
-                    showCommentScreen.toggle()
-                })
-                    .tag(index)
+                )
+                .tag(index)
             }
         }
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
         .edgesIgnoringSafeArea(.all)
         .sheet(isPresented: $showCommentScreen) {
-            CommentScreen(textFieldValue: $textFieldValue, comments: $comments)
+            CommentScreen(textFieldValue: $textFieldValue, comments: $comments, username: username)
         }
     }
 }
@@ -94,6 +102,7 @@ struct ReelPlayer: View {
 struct CommentScreen: View {
     @Binding var textFieldValue: String
     @Binding var comments: [String]
+    let username: String
 
     var body: some View {
         VStack {
@@ -110,7 +119,7 @@ struct CommentScreen: View {
                 .padding(.top, 5)
             ScrollView {
                 VStack(alignment: .leading, spacing: 10) {
-                    ForEach(comments, id: \ .self) { comment in
+                    ForEach(comments, id: \.self) { comment in
                         Text(comment)
                             .padding()
                             .background(Color.gray.opacity(0.2))
@@ -134,7 +143,7 @@ struct CommentScreen: View {
                     .padding(.all, 10)
                 Button(action: {
                     if !textFieldValue.isEmpty {
-                        comments.append(textFieldValue)
+                        comments.append("\(username): \(textFieldValue)") // Append with username
                         textFieldValue = ""
                     }
                 }) {

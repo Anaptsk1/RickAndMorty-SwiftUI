@@ -14,23 +14,21 @@ struct SignUpView: View {
     var body: some View {
         
         if currentUserSignedIn {
-            TabBar_()
+            TabBar()
         } else {
             OnboardingView()
                 .animation(.easeInOut, value: currentUserSignedIn)
         }
-        
     }
-    
 }
 
 struct OnboardingView: View {
     
     /*OnBoarding States:
-     State 1 = Signup Screen
-     State 2 = UserName Screen
-     State 3 = Age Screen
-     State 4 = Email Screen
+     State 0 = Signup Screen
+     State 1 = UserName Screen
+     State 2 = Age Screen
+     State 3 = Email Screen
      */
     @State var stateCount: Int = 0
     
@@ -44,6 +42,10 @@ struct OnboardingView: View {
     @AppStorage("userAge") var currentUserAge: Int = 0
     @AppStorage("userEmail") var currentUserEmail: String = ""
     @AppStorage("signed_in") var currentUserSignedIn: Bool = false
+    
+    //For Alert
+    @State var showAlert: Bool = false
+    @State var alertTitle: String = ""
     
     var body: some View {
         
@@ -81,6 +83,11 @@ struct OnboardingView: View {
                     }
             }
             .padding(50)
+        }
+        .alert(alertTitle, isPresented: $showAlert) {
+            Button("OK") {
+                return
+            }
         }
     }
 }
@@ -172,6 +179,24 @@ extension OnboardingView {
 //MARK: Functions
 extension OnboardingView {
     func handleButtonTap() {
+        
+        //Check inputs
+        switch stateCount {
+        case 1:
+            guard userName.count >= 2 else {
+                showAlert(text: "Please enter a valid name.")
+                return
+            }
+        case 3:
+            guard userEmail.contains("@") else {
+                showAlert(text: "Please enter a valid email.")
+                return
+            }
+        default:
+            break
+        }
+        
+        //Got to next section
         if stateCount == 3 {
             // Save user data to AppStorage
             currentUserName = userName
@@ -188,6 +213,10 @@ extension OnboardingView {
                 stateCount += 1
             }
         }
+    }
+    func showAlert(text: String) {
+        showAlert.toggle()
+        alertTitle = text
     }
 }
 
