@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct HomeView: View {
-    @StateObject var viewModel = CharacterModel()
+    
+    @ObservedObject var viewModel: CharacterModel
     @State private var heartStates = [Int: Bool]()
     @State private var showCommentScreen: Bool = false
     @State private var textFieldValue: String = ""
@@ -223,5 +224,5 @@ struct commentScreen: View {
 }
 
 #Preview {
-    HomeView()
+    HomeView(viewModel: CharacterModel(networkManager: NetworkManager()))
 }

@@ -14,8 +14,10 @@ class CharacterModel: ObservableObject {
     @Published var searchText = ""
     @Published var isLoading = false
     private var nextPageURL: URL? = URL(string: "https://rickandmortyapi.com/api/character")
+    private let networkManager: NetworkManager
     
-    init() {
+    init(networkManager: NetworkManager) {
+        self.networkManager = networkManager
         loadMoreContent()
     }
     
@@ -26,7 +28,7 @@ class CharacterModel: ObservableObject {
         
         isLoading = true
         
-        NetworkManager.shared.fetchData(from: .custom(url: nextPageURL)) { [weak self] (result: Result<CharacterResults, Error>) in
+        networkManager.fetchData(from: .custom(url: nextPageURL)) { [weak self] (result: Result<CharacterResults, Error>) in
             DispatchQueue.main.async {
                 self?.isLoading = false
                 switch result {

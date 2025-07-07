@@ -9,7 +9,11 @@ import SwiftUI
 
 struct SearchPageView: View {
     
-    @StateObject var viewModel = CharacterModel()
+    @ObservedObject var viewModel: CharacterModel
+    
+    init(viewModel: CharacterModel) {
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         NavigationStack {

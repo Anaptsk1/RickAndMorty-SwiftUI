@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct TabBar: View {
+    
     var body: some View {
         TabView {
-            HomeView()
+            HomeView(viewModel: CharacterModel(networkManager: NetworkManager()))
                 .tabItem {
                     Image(systemName: "house")
                 }
-            SearchPageView()
+            SearchPageView(viewModel: CharacterModel(networkManager: NetworkManager()))
                 .tabItem {
                     Image(systemName: "magnifyingglass")
                 }

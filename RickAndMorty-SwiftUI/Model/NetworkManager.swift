@@ -9,8 +9,6 @@ import Foundation
 
 class NetworkManager: ObservableObject {
     
-    static let shared = NetworkManager()
-    
     enum APIError: Error {
         case invalidURL
         case requestFailed

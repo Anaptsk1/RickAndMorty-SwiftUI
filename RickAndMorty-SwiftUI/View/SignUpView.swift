@@ -48,13 +48,10 @@ struct OnboardingView: View {
     @State var alertTitle: String = ""
     
     var body: some View {
-        
         ZStack {
             RadialGradient(colors: [Color.blue, Color.red], center: .topLeading, startRadius: 5, endRadius: 1000)
                 .ignoresSafeArea()
-            
             ZStack {
-                
                 switch stateCount {
                 case 0:
                     signUpScreen
@@ -74,7 +71,6 @@ struct OnboardingView: View {
                 }
                 Spacer()
             }
-            
             VStack {
                 Spacer()
                 button
@@ -91,6 +87,7 @@ struct OnboardingView: View {
         }
     }
 }
+
 //MARK: State Screens
 extension OnboardingView {
     
@@ -219,7 +216,6 @@ extension OnboardingView {
         alertTitle = text
     }
 }
-
 
 #Preview {
     OnboardingView()

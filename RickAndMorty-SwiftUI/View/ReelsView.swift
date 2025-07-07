@@ -13,16 +13,16 @@ struct ReelsView: View {
     @State private var showCommentScreen: Bool = false
     @State private var textFieldValue: String = ""
     @State private var comments: [String] = []
-
+    
     //For Appstorage
     @AppStorage("userName") var username: String = "Guest"
-
+    
     let reels: [Reel] = [
         Reel(videoURL: "https://www.example.com/video1.mp4", caption: "Amazing view!", username: "@user1"),
         Reel(videoURL: "https://www.example.com/video2.mp4", caption: "Check this out!", username: "@user2"),
         Reel(videoURL: "https://www.example.com/video3.mp4", caption: "Incredible moment!", username: "@user3")
     ]
-
+    
     var body: some View {
         TabView(selection: $currentIndex) {
             ForEach(reels.indices, id: \.self) { index in
@@ -56,11 +56,11 @@ struct ReelPlayer: View {
     let isFavorited: Bool
     let onFavoriteToggle: () -> Void
     let onCommentPressed: () -> Void
-
+    
     var body: some View {
         ZStack {
             VideoPlayer(player: AVPlayer(url: URL(string: reel.videoURL)!))
-
+            
             VStack {
                 Spacer()
                 HStack {
@@ -103,7 +103,7 @@ struct CommentScreen: View {
     @Binding var textFieldValue: String
     @Binding var comments: [String]
     let username: String
-
+    
     var body: some View {
         VStack {
             RoundedRectangle(cornerSize: .init(width: 20, height: 20))

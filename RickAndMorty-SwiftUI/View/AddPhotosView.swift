@@ -13,7 +13,7 @@ struct AddPhotosView: View {
     @State private var isCameraPresented = false
     @State private var isPhotoPickerPresented = false
     @State private var selectedImage: UIImage? = nil
-
+    
     var body: some View {
         VStack(spacing: 20) {
             if let image = selectedImage {
@@ -25,7 +25,7 @@ struct AddPhotosView: View {
                 Text("Start adding pictures")
                     .foregroundColor(.gray)
             }
-
+            
             Button(action: {
                 isCameraPresented = true
             }) {
@@ -38,7 +38,7 @@ struct AddPhotosView: View {
             .sheet(isPresented: $isCameraPresented) {
                 ImagePicker(pickerFactory: { createPicker(sourceType: .camera) }, selectedImage: $selectedImage)
             }
-
+            
             Button(action: {
                 isPhotoPickerPresented = true
             }) {
@@ -54,7 +54,7 @@ struct AddPhotosView: View {
         }
         .padding()
     }
-
+    
     func createPicker(sourceType: UIImagePickerController.SourceType) -> UIImagePickerController {
         let picker = UIImagePickerController()
         picker.sourceType = sourceType
@@ -65,33 +65,33 @@ struct AddPhotosView: View {
 struct ImagePicker: UIViewControllerRepresentable {
     var pickerFactory: () -> UIImagePickerController
     @Binding var selectedImage: UIImage?
-
+    
     func makeUIViewController(context: Context) -> UIImagePickerController {
         let picker = pickerFactory()
         picker.delegate = context.coordinator
         return picker
     }
-
+    
     func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
-
+    
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
-
+    
     class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
         let parent: ImagePicker
-
+        
         init(_ parent: ImagePicker) {
             self.parent = parent
         }
-
+        
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             if let image = info[.originalImage] as? UIImage {
                 parent.selectedImage = image
             }
             picker.dismiss(animated: true)
         }
-
+        
         func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
             picker.dismiss(animated: true)
         }
